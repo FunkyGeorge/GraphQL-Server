@@ -1,3 +1,5 @@
 import * as express from "express";
 
-console.log("running");
+const PORT = process.env.PORT || "3000";
+
+console.log("running", PORT);
