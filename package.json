@@ -1,0 +1,29 @@
+{
+  "name": "graphql-server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "pretest": "tsc -p ./tsconfig.json",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/FunkyGeorge/GraphQL-Server.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/FunkyGeorge/GraphQL-Server/issues"
+  },
+  "homepage": "https://github.com/FunkyGeorge/GraphQL-Server#readme",
+  "dependencies": {
+    "express": "^4.16.4"
+  },
+  "devDependencies": {
+    "@types/express": "^4.16.1",
+    "@types/node": "^11.12.2",
+    "tslint": "^5.14.0",
+    "typescript": "^3.4.1"
+  }
+}
