@@ -1,4 +1,4 @@
-import express from "express";
+import * as express from "express";
 import * as bp from "body-parser";
 
 const PORT = process.env.PORT || "3000";
