@@ -1,13 +1,16 @@
 version: '3' 
 services:
   postgres:
-    image: postgres:latest
+    image: postgres:11-alpine
     ports:
       - "5432:5432"
-    network_mode: host
     environment:
-      - LC_ALL=C.UTF-8
       - POSTGRES_DB=postgres
       - POSTGRES_USER=dbuser
       - POSTGRES_PASSWORD=dbpassword
-      - POSTGRES_PORT=5432
+  pgadmin:
+    image: thajeztah/pgadmin4
+    ports:
+      - "5050:5050"
+    environment:
+      - PG_ADMIN_PORT=5050
