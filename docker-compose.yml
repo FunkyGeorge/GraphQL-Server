@@ -3,7 +3,7 @@ services:
   postgres:
     image: postgres:11-alpine
     ports:
-      - "5432:5432"
+      - "127.0.0.1:5432:5432"
     environment:
       - POSTGRES_DB=postgres
       - POSTGRES_USER=dbuser
@@ -11,6 +11,6 @@ services:
   pgadmin:
     image: thajeztah/pgadmin4
     ports:
-      - "5050:5050"
+      - "127.0.0.1:5050:5050"
     environment:
       - PG_ADMIN_PORT=5050
