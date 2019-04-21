@@ -1,43 +1,64 @@
 import * as express from "express";
 import * as bp from "body-parser";
-import {createConnection} from "typeorm";
+import { Connection, createConnection } from "typeorm";
+import { ApolloServer, gql } from "apollo-server-express";
+import * as query from "qs-middleware"
 
-const PORT = process.env.PORT || "3000";
+const PORT: string = process.env.PORT || "3000";
 
 const app: express.Application = express();
 app.use(bp.json());
 
-class MainService {
-  private connection;
-  constructor(private app: express.Application) { }
-
-  public async init() {
-    try {
-      this.connection = await createConnection({
-        type: "postgres",
-        host: "localhost",
-        port: 5432,
-        username: "dbuser",
-        password: "dbpassword",
-        database: "postgres",
-        entities: [
-            __dirname + "/entity/*.js"
-        ],
-        synchronize: true,
-      })
-    } catch (e) {
-      // TODO: throw error here
-      console.log("Database connection error", e);
-    }
+// GraphQL stuff
+const typeDefs = gql`
+  type Query {
+    hello: String
   }
+`;
 
-  public listen(cb: Function) {
-    this.app.listen(cb)
+const resolvers = {
+  Query: {
+    hello: () => 'Hello World'
   }
 }
 
-const mainService = new MainService(app);
+createConnection({
+  type: "postgres",
+  host: "localhost",
+  port: 5432,
+  username: "dbuser",
+  password: "dbpassword",
+  database: "postgres",
+  entities: [
+      __dirname + "/entity/*.js"
+  ],
+  synchronize: true,
+})
+.then((connection: Connection) => {
+  const apolloServer = new ApolloServer({
+    typeDefs,
+    resolvers,
+    introspection: true,
+    playground: {
+      settings: {
+        'editor.theme': 'light',
+      },
+      tabs: [
+        {
+          endpoint: '/graphiql'
+        }
+      ],
+    }
+  });
+  const path: string = '/graphql'
 
-mainService.listen(() => {
-  console.log("Server successfully running on port", PORT);
+  app.use(query());
+  apolloServer.applyMiddleware({ app, path });
+
+  app.listen(PORT, () => {
+    console.log("listening on port:", PORT)
+  });
+})
+.catch(e => {
+  throw new Error("Error connecting to the database")
 });
