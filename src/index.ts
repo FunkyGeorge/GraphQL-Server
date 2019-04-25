@@ -5,6 +5,9 @@ import { Connection, ConnectionOptions, createConnection } from "typeorm";
 import { ApolloServer } from "apollo-server-express";
 
 import { resolvers, typeDefs } from "./graphql/schema";
+import UserReader from "./app/user/reader";
+import UserStore from "./app/user/store";
+import UserWriter from "./app/user/writer";
 
 interface IDBConfig {
   type: string;
@@ -21,7 +24,7 @@ const dbConfig = config.get<IDBConfig>("dbConfig");
 const typeOrmConfig: ConnectionOptions = {
   ...dbConfig,
   entities: [
-    __dirname + "/entity/*.js"
+    __dirname + "/database/entity/*.js"
   ],
   synchronize: true
 } as ConnectionOptions;
@@ -30,10 +33,18 @@ const app: express.Application = express();
 app.use(bp.json());
 
 createConnection(typeOrmConfig)
-.then((connection: Connection) => {
+.then((conn: Connection) => {
+  const userStore = new UserStore(conn);
+  const userReader = new UserReader(userStore);
+  const userWriter = new UserWriter(userStore);
+
   const apolloServer = new ApolloServer({
     typeDefs,
     resolvers,
+    dataSources: () => ({
+      userReader,
+      userWriter
+    } as any),
     introspection: true,
     playground: {
       settings: {
@@ -47,6 +58,11 @@ createConnection(typeOrmConfig)
     }
   });
 
+  // seed data
+  if (process.env.NODE_ENV === "development") {
+    console.log("seed wip");
+  }
+
   apolloServer.applyMiddleware({ app, path: GRAPHQL_ENDPOINT });
 
   app.listen(PORT, () => {
@@ -54,5 +70,6 @@ createConnection(typeOrmConfig)
   });
 })
 .catch(e => {
+  console.log(e);
   throw new Error("Can't connect to the database")
 });

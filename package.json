@@ -5,6 +5,7 @@
    "main": "index.js",
    "scripts": {
       "pretest": "tsc -p ./tsconfig.json",
+      "seed": "npm run pretest && node ./dist/database/seed/seedScript.js",
       "test": "echo \"Error: no test specified\" && exit 1",
       "start": "ts-node src/index.ts"
    },
