@@ -6,4 +6,10 @@ export default class UserStore {
   constructor(conn: Connection) {
     this.userConn = conn.getRepository(User);
   }
+
+  public getAllUsers() {
+    return this.userConn
+      .createQueryBuilder("user")
+      .getMany();
+  }
 }

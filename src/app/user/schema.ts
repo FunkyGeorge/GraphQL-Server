@@ -9,6 +9,6 @@ export const userSchema = gql`
   }
 
   extend type Query {
-    getUser: String
+    getAllUsers: [User]
   }
 `;

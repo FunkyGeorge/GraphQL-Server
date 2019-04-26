@@ -58,11 +58,6 @@ createConnection(typeOrmConfig)
     }
   });
 
-  // seed data
-  if (process.env.NODE_ENV === "development") {
-    console.log("seed wip");
-  }
-
   apolloServer.applyMiddleware({ app, path: GRAPHQL_ENDPOINT });
 
   app.listen(PORT, () => {
