@@ -5,6 +5,8 @@ import { Connection, ConnectionOptions, createConnection } from "typeorm";
 import { ApolloServer } from "apollo-server-express";
 
 import { resolvers, typeDefs } from "./graphql/schema";
+import PlanReader from "./app/plan/reader";
+import PlanStore from "./app/plan/store";
 import UserReader from "./app/user/reader";
 import UserStore from "./app/user/store";
 import UserWriter from "./app/user/writer";
@@ -34,7 +36,9 @@ app.use(bp.json());
 
 createConnection(typeOrmConfig)
 .then((conn: Connection) => {
+  const planStore = new PlanStore(conn);
   const userStore = new UserStore(conn);
+  const planReader = new PlanReader(planStore);
   const userReader = new UserReader(userStore);
   const userWriter = new UserWriter(userStore);
 
@@ -42,6 +46,7 @@ createConnection(typeOrmConfig)
     typeDefs,
     resolvers,
     dataSources: () => ({
+      planReader,
       userReader,
       userWriter
     } as any),

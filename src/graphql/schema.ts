@@ -1,6 +1,8 @@
 import { gql } from "apollo-server-express";
 import merge from "lodash.merge";
+import { planSchema } from "../app/plan/schema";
 import { userSchema } from "../app/user/schema";
+import { planResolver } from "../app/plan/resolver";
 import { userResolver } from "../app/user/resolver";
 
 const baseSchema = gql`
@@ -13,5 +15,5 @@ const baseSchema = gql`
   }
 `;
 
-export const typeDefs = [baseSchema, userSchema];
-export const resolvers = merge({}, userResolver);
+export const typeDefs = [baseSchema, userSchema, planSchema];
+export const resolvers = merge({}, planResolver, userResolver);

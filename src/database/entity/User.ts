@@ -2,6 +2,7 @@ import {
   Column,
   Entity,
   OneToMany,
+  ManyToMany,
   PrimaryGeneratedColumn,
 } from "typeorm";
 import { Plan } from "./Plan";
@@ -22,6 +23,9 @@ export class User {
     email: string;
 
     @OneToMany(type => Plan, plan => plan.organizer)
-    plans: Plan[];
+    organized_plans: Plan[];
+
+    @ManyToMany(type => Plan, plan => plan.attendees)
+    plans: Plan[]
 
 }
