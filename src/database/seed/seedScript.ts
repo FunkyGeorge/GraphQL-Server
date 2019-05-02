@@ -16,7 +16,6 @@ interface ISeedData {
 const data: ISeedData = seedData();
 
 const dbConfig = config.get("dbConfig");
-console.log(__dirname + "/../entity/User.js");
 const typeOrmConfig: ConnectionOptions = {
   ...dbConfig,
   entities: [

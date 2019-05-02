@@ -4,7 +4,7 @@ import {
   OneToMany,
   PrimaryGeneratedColumn,
 } from "typeorm";
-import { Meet } from "./Meet";
+import { Plan } from "./Plan";
 
 @Entity()
 export class User {
@@ -21,7 +21,7 @@ export class User {
     @Column()
     email: string;
 
-    @OneToMany(type => Meet, meet => meet.organizer)
-    meets: Meet[];
+    @OneToMany(type => Plan, plan => plan.organizer)
+    plans: Plan[];
 
 }

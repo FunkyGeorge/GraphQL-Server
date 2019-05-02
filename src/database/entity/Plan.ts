@@ -2,12 +2,12 @@ import { Entity, PrimaryGeneratedColumn, ManyToOne } from "typeorm";
 import { User } from "./User";
 
 @Entity()
-export class Meet {
+export class Plan {
 
     @PrimaryGeneratedColumn()
     id: number;
 
-    @ManyToOne(type => User, user => user.meets)
+    @ManyToOne(type => User, user => user.plans)
     organizer: User;
 
 }
