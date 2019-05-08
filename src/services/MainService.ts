@@ -1,5 +1,6 @@
 import express from "express";
 import config from "config";
+import * as http from "http";
 import { Connection, ConnectionOptions, createConnection } from "typeorm";
 import { ApolloServer } from "apollo-server-express";
 
@@ -24,6 +25,7 @@ export class MainService {
   private readonly PORT: string = process.env.PORT || "3000";
   private readonly GRAPHQL_ENDPOINT: string = "/graphql";
   private readonly typeOrmConfig: ConnectionOptions;
+  private expressServer: http.Server;
 
   constructor(private app: express.Application) {
     const dbConfig = config.get<IDBConfig>("dbConfig");
@@ -80,8 +82,12 @@ export class MainService {
   }
 
   public start() {
-    this.app.listen(this.PORT, () => {
+    this.expressServer = this.app.listen(this.PORT, () => {
       console.log("listening on port:", this.PORT)
     });
+  }
+
+  public async shutdown(): Promise<void> {
+    this.expressServer.close();
   }
 }

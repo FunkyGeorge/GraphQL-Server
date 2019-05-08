@@ -1,0 +1,10 @@
+module.exports = {
+  preset: 'ts-jest',
+  testEnvironment: 'node',
+  globals: {
+    'ts-jest': {
+      diagnostics: true
+    },
+    NODE_ENV: "test"
+  }
+};
