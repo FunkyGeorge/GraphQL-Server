@@ -13,8 +13,8 @@ describe("Unit tests", () => {
     await mainService.start();
   });
 
-  afterAll(() => {
-    mainService.shutdown();
+  afterAll(async () => {
+    await mainService.shutdown();
   });
 
   it("passes control test", () => {

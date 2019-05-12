@@ -6,7 +6,7 @@
    "scripts": {
       "pretest": "tsc -p ./tsconfig.json",
       "seed": "npm run pretest && node ./dist/database/seed/seedScript.js",
-      "test": "npm run pretest && jest dist/tests/user.test.js",
+      "test": "npm run pretest && jest dist/tests/user.test.js --detectOpenHandles",
       "start": "ts-node src/index.ts"
    },
    "repository": {
@@ -41,5 +41,15 @@
       "ts-node": "3.3.0",
       "tslint": "^5.14.0",
       "typescript": "^3.4.5"
-   }
+   },
+   "jest": {
+      "preset": "ts-jest",
+      "testEnvironment": "node",
+      "globals": {
+        "ts-jest": {
+          "diagnostics": true
+        },
+        "NODE_ENV": "test"
+      }
+    }
 }

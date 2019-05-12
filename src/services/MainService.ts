@@ -91,5 +91,6 @@ export class MainService {
     if (this.expressServer) {
       this.expressServer.close();
     }
+    return Promise.resolve();
   }
 }
