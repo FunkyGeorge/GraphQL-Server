@@ -1,12 +1,15 @@
 import { MainService } from "../src/services/MainService";
+import { User } from "../src/database/entity/User";
 const bp = require("body-parser");
 const express = require("express");
 
-describe("Unit tests", () => {
+describe("User tests", () => {
 
   let mainService: MainService;
+  let users;
   beforeAll(async () => {
-    require("../src/database/seed/seedData");
+    users = require("../src/database/seed/seedData").users;
+    require("../src/database/seed/seedScript");
     const app = express();
     app.use(bp.json());
     mainService = new MainService(app);
@@ -17,7 +20,8 @@ describe("Unit tests", () => {
     await mainService.shutdown();
   });
 
-  it("passes control test", () => {
-    expect(true).toBe(true)
+  it("can get user list", async () => {
+    const usersResponse = await mainService.dataSources.userReader.getAllUsers();
+    expect(usersResponse.length).toBe(users.length);
   })
 });

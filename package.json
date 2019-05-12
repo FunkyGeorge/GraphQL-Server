@@ -6,7 +6,7 @@
    "scripts": {
       "pretest": "tsc -p ./tsconfig.json",
       "seed": "npm run pretest && node ./dist/database/seed/seedScript.js",
-      "test": "npm run pretest && jest dist/tests/user.test.js --detectOpenHandles",
+      "test": "npm run pretest && jest dist/tests --detectOpenHandles",
       "start": "ts-node src/index.ts"
    },
    "repository": {

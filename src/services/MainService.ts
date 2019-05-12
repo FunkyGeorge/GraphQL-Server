@@ -11,6 +11,8 @@ import UserReader from "../app/user/reader";
 import UserStore from "../app/user/store";
 import UserWriter from "../app/user/writer";
 
+import { IDatasources } from "../app/interfaces";
+
 interface IDBConfig {
   type: string;
   host: string;
@@ -26,6 +28,7 @@ export class MainService {
   private readonly GRAPHQL_ENDPOINT: string = "/graphql";
   private readonly typeOrmConfig: ConnectionOptions;
   private expressServer: http.Server;
+  public dataSources: IDatasources;
 
   constructor(private app: express.Application) {
     const dbConfig = config.get<IDBConfig>("dbConfig");
@@ -44,18 +47,16 @@ export class MainService {
     try {
       const planStore = new PlanStore(this.connection);
       const userStore = new UserStore(this.connection);
-      const planReader = new PlanReader(planStore);
-      const userReader = new UserReader(userStore);
-      const userWriter = new UserWriter(userStore);
+      this.dataSources = {
+        planReader: new PlanReader(planStore),
+        userReader: new UserReader(userStore),
+        userWriter: new UserWriter(userStore)
+      };
 
       const apolloServer = new ApolloServer({
         typeDefs,
         resolvers,
-        dataSources: () => ({
-          planReader,
-          userReader,
-          userWriter
-        } as any),
+        dataSources: () => this.dataSources as any,
         introspection: true,
         playground: {
           settings: {
