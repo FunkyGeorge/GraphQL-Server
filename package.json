@@ -6,7 +6,7 @@
    "scripts": {
       "pretest": "tsc -p ./tsconfig.json",
       "seed": "npm run pretest && node ./dist/database/seed/seedScript.js",
-      "test": "jest",
+      "test": "npm run pretest && jest dist/tests/user.test.js",
       "start": "ts-node src/index.ts"
    },
    "repository": {

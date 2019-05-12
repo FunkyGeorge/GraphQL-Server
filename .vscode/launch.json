@@ -32,7 +32,9 @@
         "${workspaceRoot}/dist/bin/**/*.js",
         "${workspaceRoot}/dist/test/**/*.js"
       ],
-      "args": [],
+      "args": [
+        "dist/tests/user.test.js"
+      ],
       "env": {
         "PORT": "3000",
         "NODE_ENV": "development"

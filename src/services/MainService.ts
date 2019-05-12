@@ -36,7 +36,6 @@ export class MainService {
       ],
       synchronize: true
     } as ConnectionOptions;
-    this.init();
   }
 
   private async init() {
@@ -81,13 +80,16 @@ export class MainService {
     };
   }
 
-  public start() {
+  public async start() {
+    await this.init();
     this.expressServer = this.app.listen(this.PORT, () => {
       console.log("listening on port:", this.PORT)
     });
   }
 
   public async shutdown(): Promise<void> {
-    this.expressServer.close();
+    if (this.expressServer) {
+      this.expressServer.close();
+    }
   }
 }

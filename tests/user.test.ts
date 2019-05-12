@@ -2,15 +2,15 @@ import { MainService } from "../src/services/MainService";
 const bp = require("body-parser");
 const express = require("express");
 
-describe("User tests", () => {
+describe("Unit tests", () => {
 
   let mainService: MainService;
-  beforeAll(() => {
+  beforeAll(async () => {
     require("../src/database/seed/seedData");
     const app = express();
     app.use(bp.json());
     mainService = new MainService(app);
-    mainService.start();
+    await mainService.start();
   });
 
   afterAll(() => {
