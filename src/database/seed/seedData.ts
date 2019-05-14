@@ -1,9 +1,9 @@
 const seedData = () => ({
-  "users": [
+  users: [
     {
-      "firstName": "George",
-      "lastName": "Miranda",
-      "email": "george@miranda.com"
+      firstName: "George",
+      lastName: "Miranda",
+      email: "george@miranda.com"
     }
   ]
 });

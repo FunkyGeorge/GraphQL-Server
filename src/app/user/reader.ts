@@ -1,5 +1,5 @@
-import UserStore from "./store";
 import { User } from "../../database/entity/User";
+import UserStore from "./store";
 
 export default class UserReader {
   constructor(private repository: UserStore) { }

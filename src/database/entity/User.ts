@@ -1,8 +1,8 @@
 import {
   Column,
   Entity,
-  OneToMany,
   ManyToMany,
+  OneToMany,
   PrimaryGeneratedColumn,
 } from "typeorm";
 import { Plan } from "./Plan";
@@ -22,10 +22,10 @@ export class User {
     @Column()
     email: string;
 
-    @OneToMany(type => Plan, plan => plan.organizer)
-    organized_plans: Plan[];
+    @OneToMany((type) => Plan, (plan) => plan.organizer)
+    organizedPlans: Plan[];
 
-    @ManyToMany(type => Plan, plan => plan.attendees)
-    plans: Plan[]
+    @ManyToMany((type) => Plan, (plan) => plan.attendees)
+    plans: Plan[];
 
 }

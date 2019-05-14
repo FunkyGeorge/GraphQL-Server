@@ -1,3 +1,5 @@
+/* tslint:disable:no-require-imports */
+
 import { MainService } from "../src/services/MainService";
 const bp = require("body-parser");
 const express = require("express");

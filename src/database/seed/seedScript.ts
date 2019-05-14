@@ -1,7 +1,7 @@
-import { Connection, ConnectionOptions, createConnection } from "typeorm";
 import config from "config";
-import seedData from "./seedData";
+import { Connection, ConnectionOptions, createConnection } from "typeorm";
 import { User } from "../entity/User";
+import seedData from "./seedData";
 
 interface ISeedUser {
   firstName: string;
@@ -42,7 +42,7 @@ createConnection(typeOrmConfig)
     await userRepository.save(u);
   });
 })
-.catch(e => {
+.catch((e) => {
   console.log(e);
   return new Error("Error with seed");
-})
+});

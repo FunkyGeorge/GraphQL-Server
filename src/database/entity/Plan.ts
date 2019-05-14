@@ -1,8 +1,8 @@
 import {
     Entity,
-    PrimaryGeneratedColumn,
+    ManyToMany,
     ManyToOne,
-    ManyToMany
+    PrimaryGeneratedColumn
 } from "typeorm";
 import { User } from "./User";
 
@@ -12,10 +12,10 @@ export class Plan {
     @PrimaryGeneratedColumn()
     id: number;
 
-    @ManyToOne(type => User, user => user.organized_plans)
+    @ManyToOne((type) => User, (user) => user.organizedPlans)
     organizer: User;
 
-    @ManyToMany(type => User, user => user.plans)
-    attendees: User[]
+    @ManyToMany((type) => User, (user) => user.plans)
+    attendees: User[];
 
 }

@@ -1,15 +1,15 @@
-import express from "express";
+import { ApolloServer } from "apollo-server-express";
 import config from "config";
+import express from "express";
 import * as http from "http";
 import { Connection, ConnectionOptions, createConnection } from "typeorm";
-import { ApolloServer } from "apollo-server-express";
 
-import { resolvers, typeDefs } from "../graphql/schema";
 import PlanReader from "../app/plan/reader";
 import PlanStore from "../app/plan/store";
 import UserReader from "../app/user/reader";
 import UserStore from "../app/user/store";
 import UserWriter from "../app/user/writer";
+import { resolvers, typeDefs } from "../graphql/schema";
 
 import { IDatasources } from "../app/interfaces";
 
@@ -23,12 +23,12 @@ interface IDBConfig {
 }
 
 export class MainService {
+  public dataSources: IDatasources;
   private connection: Connection;
   private readonly PORT: string = process.env.PORT || "3000";
   private readonly GRAPHQL_ENDPOINT: string = "/graphql";
   private readonly typeOrmConfig: ConnectionOptions;
   private expressServer: http.Server;
-  public dataSources: IDatasources;
 
   constructor(private app: express.Application) {
     const dbConfig = config.get<IDBConfig>("dbConfig");
@@ -39,6 +39,20 @@ export class MainService {
       ],
       synchronize: true
     } as ConnectionOptions;
+  }
+
+  public async start() {
+    await this.init();
+    this.expressServer = this.app.listen(this.PORT, () => {
+      console.log("listening on port:", this.PORT);
+    });
+  }
+
+  public async shutdown(): Promise<void> {
+    if (this.expressServer) {
+      this.expressServer.close();
+    }
+    return Promise.resolve();
   }
 
   private async init() {
@@ -60,7 +74,7 @@ export class MainService {
         introspection: true,
         playground: {
           settings: {
-            'editor.theme': 'light',
+            "editor.theme": "light",
           },
           tabs: [
             {
@@ -77,21 +91,7 @@ export class MainService {
 
     } catch (e) {
       console.log(e);
-      throw new Error("Can't connect to the database")
-    };
-  }
-
-  public async start() {
-    await this.init();
-    this.expressServer = this.app.listen(this.PORT, () => {
-      console.log("listening on port:", this.PORT)
-    });
-  }
-
-  public async shutdown(): Promise<void> {
-    if (this.expressServer) {
-      this.expressServer.close();
+      throw new Error("Can't connect to the database");
     }
-    return Promise.resolve();
   }
 }
