@@ -1,5 +1,4 @@
 import { MainService } from "../src/services/MainService";
-import { User } from "../src/database/entity/User";
 const bp = require("body-parser");
 const express = require("express");
 
@@ -23,5 +22,5 @@ describe("User tests", () => {
   it("can get user list", async () => {
     const usersResponse = await mainService.dataSources.userReader.getAllUsers();
     expect(usersResponse.length).toBe(users.length);
-  })
+  });
 });
