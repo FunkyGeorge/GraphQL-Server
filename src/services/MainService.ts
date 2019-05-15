@@ -44,7 +44,7 @@ export class MainService {
   public async start() {
     await this.init();
     this.expressServer = this.app.listen(this.PORT, () => {
-      console.log("listening on port:", this.PORT);
+      console.log("listening on port:", this.PORT); // tslint:disable-line no-console
     });
   }
 
@@ -90,7 +90,7 @@ export class MainService {
       });
 
     } catch (e) {
-      console.log(e);
+      console.log(e); // tslint:disable-line no-console
       throw new Error("Can't connect to the database");
     }
   }

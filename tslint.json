@@ -6,8 +6,8 @@
     "jsRules": {},
     "rules": {
         "member-access": false,
-        "trailing-comma": false,
-        "object-literal-sort-keys": false
+        "object-literal-sort-keys": false,
+        "trailing-comma": false
     },
     "rulesDirectory": []
 }

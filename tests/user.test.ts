@@ -1,16 +1,14 @@
-/* tslint:disable:no-require-imports */
-
+import * as bp from "body-parser";
+import express from "express";
+import seedData from "../src/database/seed/seedData";
 import { MainService } from "../src/services/MainService";
-const bp = require("body-parser");
-const express = require("express");
 
 describe("User tests", () => {
 
   let mainService: MainService;
-  let users;
+  const users = seedData().users;
   beforeAll(async () => {
-    users = require("../src/database/seed/seedData").users;
-    require("../src/database/seed/seedScript");
+    await require("../src/database/seed/seedScript");
     const app = express();
     app.use(bp.json());
     mainService = new MainService(app);
