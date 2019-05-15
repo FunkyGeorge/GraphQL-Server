@@ -5,7 +5,7 @@
    "main": "index.js",
    "scripts": {
       "lint": "tslint -p tsconfig.json",
-      "pretest": "tsc -p ./tsconfig.json",
+      "pretest": "npm run lint && tsc -p ./tsconfig.json",
       "seed": "npm run pretest && node ./dist/database/seed/seedScript.js",
       "test": "npm run pretest && jest dist/tests --detectOpenHandles",
       "start": "ts-node src/index.ts"

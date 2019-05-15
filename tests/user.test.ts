@@ -8,11 +8,11 @@ describe("User tests", () => {
   let mainService: MainService;
   const users = seedData().users;
   beforeAll(async () => {
-    await require("../src/database/seed/seedScript");
     const app = express();
     app.use(bp.json());
     mainService = new MainService(app);
     await mainService.start();
+    await require("../src/database/seed/seedScript");
   });
 
   afterAll(async () => {

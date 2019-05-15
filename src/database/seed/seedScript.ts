@@ -43,6 +43,6 @@ createConnection(typeOrmConfig)
   });
 })
 .catch((e) => {
-  console.log(e);
+  console.log(e);  // tslint:disable-line no-console
   return new Error("Error with seed");
 });
